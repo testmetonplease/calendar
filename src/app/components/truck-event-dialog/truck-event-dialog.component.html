@@ -1,0 +1,54 @@
+<p-dialog header="New truck departure" [visible]="true" modal="modal" [closeOnEscape]="false" [closable]="false" [appendTo]="body"
+  [positionTop]=80 [responsive]="true" [minWidth]=450>
+
+  <form *ngIf="true" [formGroup]="eventForm" novalidate>
+    <div style="margin-top:30px">
+      <div class="ui-g ui-fluid">
+        <span class="ui-inputgroup-addon">
+
+          <input style="width:240px;margin-left:.5em" formControlName="carNumber" type="text" pInputText placeholder="Car number" pTooltip="Enter car number"
+            tooltipEvent="focus" tooltipPosition="top">
+          <i class="fa fa-truck"></i>
+          <div *ngIf="carNumber.dirty && !carNumber.valid">
+            <p-message style="margin-left:.5em" severity="error" text="this is not a valid carNumber"></p-message>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div style="margin-top:30px">
+      <div class="ui-g ui-fluid">
+        <span class="ui-inputgroup-addon">
+          <p-calendar [disabled]="true" [(ngModel)]="startDate" [showIcon]="true" hourFormat="24" [disabledDays]="[0,6]" stepHour="1"
+            stepMinute="60" formControlName="startDate"></p-calendar>
+          <span style="margin-left:.5em">{{startdate|date}}</span>
+
+          <div *ngIf="startDate.dirty && !startDate.valid">
+            <p-message style="margin-left:.5em" severity="error" text="this is not a valid startDate"></p-message>
+          </div>
+        </span>
+      </div>
+    </div>
+
+
+
+
+    <div style="margin-top:20px;margin-bottom:70px">
+      <div class="ui-g ui-fluid">
+        <p-checkbox [(ngModel)]="checkBox" label="Disable this time?" binary="true" formControlName="checkBox"></p-checkbox>
+      </div>
+    </div>
+    <p-footer>
+      <div class="flex-container">
+        <div>
+          <button pButton type="button" label="Done" (click)="insertEvent()">
+          </button>
+        </div>
+        <div>
+          <button pButton type="button" label="Cancel" (click)="deleteEvent()"> </button>
+        </div>
+      </div>
+
+    </p-footer>
+  </form>
+</p-dialog>

@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "es2015",
+    "types": [],
+    "paths": {
+      "@app/*": ["app/*"],
+      "@env/*": ["environments/*"],
+      "@providers/*": ["app/providers/*"],
+      "@actions/*": ["app/ngxstore/actions/*"],
+      "@reducers/*": ["app/ngxstore/reducers/*"],
+      "@effects/*": ["app/ngxstore/effects/*"],
+      "@models/*": ["app/ngxstore/models/*"]
+    }
+  },
+  "exclude": ["test.ts", "**/*.spec.ts"]
+}

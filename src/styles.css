@@ -1,0 +1,119 @@
+.navbar-brand > img {
+  height: 25%;
+  width: auto;
+  display: inline;
+}
+.logo {
+  list-style-type: none;
+  display: flex;
+  width: 20px;
+  float: left;
+  height: 20px;
+  position: relative;
+  background-image: url('./assets/images/logo.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.avatar {
+  list-style-type: none;
+  display: flex;
+  width: 20px;
+  float: left;
+  margin-right: 10px;
+  padding-right: 10px;
+  height: 20px;
+  position: relative;
+  background-image: url('./assets/images/avatar.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.user {
+  float: left;
+  position: relative;
+  margin: 7px;
+}
+
+.name {
+  float: right;
+}
+.email {
+  float: left;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+.center-bar {
+  text-align: center;
+}
+.calendar_container {
+  height: 100vh;
+  overflow: auto;
+}
+.ui-state-highlight {
+  background: yellow !important;
+}
+
+.fc-time-grid .fc-slats td {
+  height: 4em;
+}
+
+.fc-content {
+  display: flex;
+}
+.fc-content .fc-time {
+  display: none;
+}
+.fc-content .fc-bg {
+  display: none;
+}
+
+.fc-content .fc-title {
+  vertical-align: bottom;
+  color: #1b0719;
+  width: 100%;
+}
+.fc-event {
+  display: table;
+  overflow: auto;
+  font-size: 0.85em;
+  line-height: 1.3;
+  border-radius: 3px;
+  border: 1px solid #1c1e2c;
+}
+.red {
+  display: table-row;
+  background: red !important;
+}
+.green {
+  display: table-row;
+  background: #6cba5b !important;
+}
+.grey {
+  display: table-row;
+  background: #6d6d6d !important;
+}
+.red.fc-bgevent {
+  display: table-row;
+  color: #1b0719;
+  background: red !important;
+}
+.green.fc-bgevent {
+  display: table-row;
+  color: #1b0719;
+  background: #6cba5b !important;
+}
+.grey.fc-bgevent {
+  display: table-row;
+  color: #1b0719;
+  background: #6d6d6d !important;
+}
+
+.fc-event .fc-bg {
+  display: none;
+  overflow: auto;
+  z-index: 1;
+  background: #fff;
+  opacity: 0.25;
+}

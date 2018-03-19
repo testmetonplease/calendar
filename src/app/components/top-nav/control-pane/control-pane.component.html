@@ -1,0 +1,30 @@
+<div class="flex-container">
+  <div class="right_bar">
+    <a ui-sref="app.desktop" href="/">
+      <div class="logo"></div>
+      <div class="name">utoSchedule</div>
+    </a>
+  </div>
+  <!-- logout -->
+  <div *ngIf="(loginUser$ | async).email !== null" class="center_bar">
+    <div style="margin-left:1em">
+      <span class="fa-passwd-reset fa-stack">
+        <i class="fa fa-undo fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x"></i>
+      </span>
+      <button pButton type="button" icon='fa-truck' label="Now You can edit the Schedule ">
+      </button>
+    </div>
+  </div>
+  <div *ngIf="(loginUser$ | async).email !== null" class="left_bar">
+    <div class="user">
+      <div class="avatar"></div>
+      <div class="email">{{(loginUser$ | async)?.email }} </div>
+    </div>
+    <button pButton label="Logout" icon="fa-sign-out" (click)="logOut()"> </button>
+  </div>
+  <!-- login -->
+  <div *ngIf="(loginUser$ | async).email === null" class="left_bar">
+    <button pButton label="Sign In" (click)="signIn()"> </button>
+  </div>
+</div>

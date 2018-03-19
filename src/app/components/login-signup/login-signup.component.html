@@ -1,0 +1,148 @@
+<!-- Login section  -->
+<div *ngIf="loginSignState.login">
+  <p-dialog header="Log In" [visible]="true" modal="modal" [closeOnEscape]="false" [closable]="false" [appendTo]="body" [positionTop]=80
+    [responsive]="true" [minWidth]=400>
+
+    <form *ngIf="true" [formGroup]="loginForm" novalidate>
+      <div style="margin-top:30px">
+        <div class="ui-g ui-fluid">
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-envelope"></i>
+            <input style="width:240px;margin-left:.5em" formControlName="email" type="text" pInputText pKeyFilter="email" placeholder="Email"
+              pTooltip="Enter your email" tooltipEvent="focus" tooltipPosition="top">
+            <div *ngIf="email.dirty && !email.valid">
+              <p-message style="margin-left:.5em" severity="error" text="this is not a valid email"></p-message>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;margin-bottom:70px">
+        <div class="ui-g ui-fluid">
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-key"></i>
+          </span>
+          <input style="width:240px;margin-left:.5em" type="password" pPassword formControlName="password" placeholder="Password">
+        </div>
+      </div>
+      <p-footer>
+        <div class="flex-container">
+          <div>
+            <button pButton type="button" icon="fa fa-sign-in" label="Sign In" (click)="loginAction()" [disabled]="!loginForm.valid">
+            </button>
+          </div>
+          <div>
+            <button pButton type="button" icon="fa fa-user-plus" label="Sign Up" (click)="gotoSignUp()"> </button>
+          </div>
+        </div>
+        <a href="#" style="font-size:.5em" (click)="gotoResetPassword()">Forgot the password?</a>
+      </p-footer>
+    </form>
+  </p-dialog>
+</div>
+<!-- SignUp section  -->
+<div *ngIf="loginSignState.signUp">
+  <p-dialog header="Sign Up" [visible]="true" modal="modal" [closeOnEscape]="false" [closable]="false" [appendTo]="body" [positionTop]=80
+    [responsive]="true" [minWidth]=400>
+
+    <form *ngIf="true" [formGroup]="signUpForm" novalidate>
+      <div style="margin-top:20px">
+        <div class="ui-g ui-fluid">
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-envelope"></i>
+            <input style="width:240px" formControlName="email" type="text" pInputText pKeyFilter="email" placeholder="Email" pTooltip="Enter your email"
+              tooltipEvent="focus">
+            <div *ngIf="email.dirty && !email.valid">
+              <p-message severity="error" text="this is not a valid email"></p-message>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div style="margin-top:20px">
+        <div class="ui-g ui-fluid">
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-user"></i>
+            <input style="width:240px;margin-left:.5em" formControlName="username" type="text" pInputText placeholder="Username">
+            <div *ngIf="username.invalid && username.dirty && (username.length===0)">
+              <p-message severity="error" text="{{ username.value }} is not valid"></p-message>
+            </div>
+            <div *ngIf="username.invalid && username.dirty && (username.length > 0)">
+              <p-message severity="error" text="{{ username.value }} is already taken"></p-message>
+            </div>
+            <div *ngIf="username.valid">
+              <p-message severity="success" text="{{ username.value }} is available"></p-message>
+            </div>
+            <div *ngIf="username.pending">
+              <p-message severity="info" text="Hold tight... Checking availability of {{ username.value }}"></p-message>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;margin-bottom:70px">
+        <div class="ui-g ui-fluid">
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-key"></i>
+          </span>
+          <input style="width:240px;margin-left:.5em" type="password" pPassword formControlName="password" placeholder="Password">
+        </div>
+      </div>
+
+      <p-footer>
+        <div class="flex-container">
+          <div>
+            <button pButton type="button" icon="fa fa-user-plus" label="Sign Up" (click)="SignUpAction()" [disabled]="true">
+            </button>
+          </div>
+          <div>
+            <button pButton type="button" icon="fa fa-sign-in" label="Sign In" (click)="gotologIn()">
+            </button>
+          </div>
+
+        </div>
+        <a href="#" style="font-size:.5em" (click)="gotoResetPassword()">Forgot the password?</a>
+      </p-footer>
+    </form>
+  </p-dialog>
+</div>
+<!-- Reset section  -->
+<div *ngIf="loginSignState.reset">
+  <p-dialog header="Reset password" [visible]="true" modal="modal" [closeOnEscape]="false" [closable]="false" [appendTo]="body"
+    [positionTop]=80 [responsive]="true" [minWidth]=400>
+
+    <form *ngIf="true" [formGroup]="resetPasswordForm" novalidate>
+      <div style="margin-top:30px;margin-bottom:20px">
+        <div class="ui-g ui-fluid">
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-envelope"></i>
+            <input style="width:240px;margin-left:.5em" formControlName="email" type="text" pInputText pKeyFilter="email" placeholder="Email"
+              pTooltip="Enter your email" tooltipEvent="focus" tooltipPosition="top">
+            <div *ngIf="email.dirty && !email.valid">
+              <p-message style="margin-left:.5em" severity="error" text="this is not a valid email"></p-message>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div style="margin-top:20px;margin-bottom:40px;margin-left:1em">
+        <span class="fa-passwd-reset fa-stack">
+          <i class="fa fa-undo fa-stack-2x"></i>
+          <i class="fa fa-lock fa-stack-1x"></i>
+        </span>
+        <button pButton type="button" label="Reset Password" (click)="resetAction()" [disabled]="true">
+        </button>
+      </div>
+
+      <p-footer>
+        <div class="flex-container">
+          <div>
+            <button pButton type="button" icon="fa fa-sign-in" label="Sign In" (click)="gotologIn()">
+            </button>
+          </div>
+          <div>
+            <button pButton type="button" icon="fa fa-user-plus" label="Sign Up" (click)="gotoSignUp()"> </button>
+          </div>
+        </div>
+      </p-footer>
+    </form>
+  </p-dialog>
+</div>
