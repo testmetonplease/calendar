@@ -37,14 +37,14 @@ export class Eventsffects {
     private scheduler: Scheduler
   ) {}
 
-  @Effect()
+  /*  @Effect()
   addOneEvent$: Observable<Action> = this.actions$.pipe(
     ofType<fromEventsActions.AddOneEvent>(fromEventsActions.AddOneEvent),
     map(action => action.payload),
     switchMap(time => {
-      console.log('I am in effects');
+    
       console.log(time);
       return empty();
     })
-  );
+  );*/
 }

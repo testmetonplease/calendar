@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UUID } from 'angular2-uuid';
+import { Message } from 'primeng/api';
 
 import {
   FormGroup,
@@ -15,6 +16,7 @@ import * as fromEventsActions from '@actions/events.actions';
 import * as fromEvents from '../../ngxstore/reducers/events.reducers';
 import { Observable } from 'rxjs/Observable';
 import { Event } from '@models/event.model';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-truck-event-dialog',
@@ -22,21 +24,28 @@ import { Event } from '@models/event.model';
   styleUrls: ['./truck-event-dialog.component.scss']
 })
 export class TruckEventDialogComponent implements OnInit {
+  @Input() currentStartTime: string;
+  @Input() currentEndTime: string;
   eventForm: FormGroup;
   allBars$: Observable<AllBarsState>;
+  eventList: any[];
+  msgs: Message[] = [];
 
   constructor(
     private fb: FormBuilder,
     private allbarstore: Store<AllBarsState>,
-    private eventstore: Store<EventsState>
+    private eventstore: Store<EventsState>,
+    private messageService: MessageService
   ) {
     this.allBars$ = allbarstore.select(AllBarsReducer.getAllBarsStates);
+    this.eventstore
+      .select(fromEvents.selectAllEvents)
+      .subscribe((res: Event[]) => {
+        this.eventList = res;
+      });
   }
   get carNumber() {
     return this.eventForm.get('carNumber').value;
-  }
-  get startDate() {
-    return this.eventForm.get('startDate').value;
   }
 
   get checkBox() {
@@ -46,8 +55,7 @@ export class TruckEventDialogComponent implements OnInit {
   ngOnInit() {
     this.eventForm = this.fb.group({
       carNumber: ['', [Validators.required]],
-      startDate: ['', [Validators.required]],
-      checkBox: ['', [Validators.required]]
+      checkBox: ['', []]
     });
   }
 
@@ -57,23 +65,49 @@ export class TruckEventDialogComponent implements OnInit {
 
   insertEvent(): void {
     let event: Event;
+    let backcolor: string;
+    let newArray = this.eventList.filter(item => {
+      if (item.start === this.currentStartTime) return item;
+    });
+    switch (newArray.length) {
+      case 4:
+        console.log('not space');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Service Message',
+          detail: 'No space more'
+        });
+        return;
+
+      case 3:
+        backcolor = 'red';
+        newArray.forEach(item => (item.className = ['red']));
+        this.eventstore.dispatch(
+          new fromEventsActions.UpdateManyEvents(newArray)
+        );
+
+        break;
+      default:
+        backcolor = 'green';
+    }
+
     if (!this.checkBox) {
       event = {
         id: this.generateUUID(),
-        title: 'BBSSNNXX',
-        start: '2018-03-20T10:00:00',
-        end: '2018-03-20T11:00:00',
-        className: ['red'],
-        rendering: 'background'
+        title: this.carNumber,
+        start: this.currentStartTime,
+        end: this.currentEndTime,
+        className: [backcolor],
+        rendering: ':background'
       };
     } else {
       event = {
         id: this.generateUUID(),
-        title: 'Closed hour',
-        start: '2018-03-19T10:00:00',
-        end: '2018-03-19T11:00:00',
-        className: ['green'],
-        rendering: 'background'
+        title: 'Closed Hour',
+        start: this.currentStartTime,
+        end: this.currentEndTime,
+        className: ['grey'],
+        rendering: ':background'
       };
     }
 
@@ -85,7 +119,7 @@ export class TruckEventDialogComponent implements OnInit {
     let changes: Partial<Event> = {
       title: 'LETSCHANGE1',
       start: '2018-03-17T10:00:00',
-      className: ['blue']
+      className: ['green']
     };
 
     this.eventstore.dispatch(new fromEventsActions.UpdateOneEvent(id, changes));

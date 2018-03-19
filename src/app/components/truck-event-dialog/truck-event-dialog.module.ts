@@ -11,6 +11,8 @@ import { MessageModule } from 'primeng/message';
 import { TooltipModule } from 'primeng/tooltip';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { GrowlModule } from 'primeng/growl';
 
 @NgModule({
   imports: [
@@ -22,9 +24,11 @@ import { CheckboxModule } from 'primeng/checkbox';
     CalendarModule,
     DialogModule,
     CheckboxModule,
+    GrowlModule,
     TruckEventDialogRoutingModule
   ],
   declarations: [TruckEventDialogComponent],
+  providers: [MessageService],
   exports: [TruckEventDialogComponent]
 })
 export class TruckEventDialogModule {}

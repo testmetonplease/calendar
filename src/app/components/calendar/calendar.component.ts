@@ -8,6 +8,7 @@ import * as fromAllLoginSignUpActions from '@actions/login-signup.actions';
 import * as fromAllBarsActions from '@actions/allbars.actions';
 import * as loginSignupReducer from '@reducers/login-signup.reducers';
 import * as allBarsReducer from '@reducers/allbars.reducers';
+import * as moment from 'moment';
 import {
   EventsState,
   LoginSignUPState,
@@ -27,8 +28,11 @@ export class CalendarComponent implements OnInit {
   businessHours: any;
   header: any;
   eventList$: Observable<Event[]>;
+  allBars$: Observable<AllBarsState>;
   eventList: any[];
   email: string = null;
+  curStartTime: string;
+  curEndTime: string;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -37,11 +41,8 @@ export class CalendarComponent implements OnInit {
     private allbarstore: Store<AllBarsState>
   ) {
     this.eventList$ = this.eventstore.select(fromEvents.selectAllEvents);
-    // this.eventstore
-    //   .select(fromEvents.selectAllEvents)
-    //   .subscribe((res: Event[]) => {
-    //     this.eventList = res;
-    //  });
+    this.allBars$ = allbarstore.select(allBarsReducer.getAllBarsStates);
+
     this.login.select(loginSignupReducer.getloginUser).subscribe(res => {
       this.email = res.email;
     });
@@ -60,32 +61,43 @@ export class CalendarComponent implements OnInit {
     };
   }
   handleEventClick($event) {
-    console.log('handleEventClick' + $event);
-    //  this.allbarstore.dispatch(new fromAllBarsActions.DisplayEventAction());
-  }
-  handleDayClick($event) {
-    /*  if (this.email === null) {
+    if (this.email === null) {
       this.confirmationService.confirm({
         message: 'Your permission denied . Do you want sign in?',
         accept: () => {
-          console.log($event.date);
           this.allbarstore.dispatch(new fromAllBarsActions.DisplayAction());
         },
         reject: () => {}
       });
-    } else {*/
-    console.log($event.date);
-    this.allbarstore.dispatch(new fromAllBarsActions.DisplayEventAction());
-    // }
+    } else {
+      this.curStartTime = moment($event.calEvent.start).toISOString(true);
+      this.curEndTime = moment(
+        moment($event.calEvent.start).add(1, 'hours')
+      ).toISOString(true);
+      this.allbarstore.dispatch(new fromAllBarsActions.DisplayEventAction());
+    }
   }
-  handleEventRender = $event => {
-    console.log('I render1');
-    console.log($event);
-  };
 
-  handleDayRender = (date, cell) => {
-    console.log('I rendering day');
-  };
+  handleDayClick($event) {
+    if (this.email === null) {
+      this.confirmationService.confirm({
+        message: 'Your permission denied . Do you want sign in?',
+        accept: () => {
+          this.allbarstore.dispatch(new fromAllBarsActions.DisplayAction());
+        },
+        reject: () => {}
+      });
+    } else {
+      this.curStartTime = moment($event.date).toISOString(true);
+      this.curEndTime = moment(moment($event.date).add(1, 'hours')).toISOString(
+        true
+      );
+      this.allbarstore.dispatch(new fromAllBarsActions.DisplayEventAction());
+    }
+  }
+  handleEventRender = $event => {};
+
+  handleDayRender = (date, cell) => {};
 
   getDate() {
     return new Date();

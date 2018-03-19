@@ -19,7 +19,6 @@ import { CommonService } from '@providers/common-service';
 import { TopNavModule } from './components/top-nav/top-nav.module';
 import { LoginSignupModule } from './components/login-signup/login-signup.module';
 import { CalendarModule } from './components/calendar/calendar.module';
-import { TruckEventDialogModule } from './components/truck-event-dialog/truck-event-dialog.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +29,6 @@ import { TruckEventDialogModule } from './components/truck-event-dialog/truck-ev
     TopNavModule,
     CalendarModule,
     LoginSignupModule,
-    TruckEventDialogModule,
     BrowserAnimationsModule,
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     EffectsModule.forRoot([AppEffects, LoginSignupEffects]),

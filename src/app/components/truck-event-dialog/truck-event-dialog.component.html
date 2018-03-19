@@ -18,15 +18,11 @@
 
     <div style="margin-top:30px">
       <div class="ui-g ui-fluid">
-        <span class="ui-inputgroup-addon">
-          <p-calendar [disabled]="true" [(ngModel)]="startDate" [showIcon]="true" hourFormat="24" [disabledDays]="[0,6]" stepHour="1"
-            stepMinute="60" formControlName="startDate"></p-calendar>
-          <span style="margin-left:.5em">{{startdate|date}}</span>
+        <h3>Start time</h3>
+        {{currentStartTime | date}}
+        <h3>End time</h3>
+        {{ currentEndTime | date }}
 
-          <div *ngIf="startDate.dirty && !startDate.valid">
-            <p-message style="margin-left:.5em" severity="error" text="this is not a valid startDate"></p-message>
-          </div>
-        </span>
       </div>
     </div>
 
@@ -45,10 +41,11 @@
           </button>
         </div>
         <div>
-          <button pButton type="button" label="Cancel" (click)="deleteEvent()"> </button>
+          <button pButton type="button" label="Cancel" (click)="cancel()"> </button>
         </div>
       </div>
 
     </p-footer>
   </form>
 </p-dialog>
+<p-growl [(value)]="msgs"></p-growl>

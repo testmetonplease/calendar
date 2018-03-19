@@ -18,14 +18,21 @@ export function reducer(
     case fromActions.ADD_ONE:
       return eventAdapter.addOne(action.event, state);
     case fromActions.UPDATE_ONE:
-      console.log('пошел апдейт');
-      console.log(action);
       return eventAdapter.updateOne(
         {
           id: action.id,
           changes: action.changes
         },
         state
+      );
+    case fromActions.UPDATE_MANY:
+      console.log('i am in reducer');
+      console.log(action.payload);
+      return eventAdapter.updateMany(
+        action.payload.map(event =>
+          Object.assign({}, { id: event.id, changes: event.changes })
+        ),
+        { ...state }
       );
     case fromActions.DELETE_ONE:
       return eventAdapter.removeOne(action.id, state);
@@ -34,9 +41,6 @@ export function reducer(
     case fromActions.INIT_EVENTS:
       console.log(action.events);
       return eventAdapter.addAll(action.events, state);
-    case fromActions.SEARCHEVENTS:
-      const time = action.payload;
-      const findEvents = state.filter(event => !state.entities[event.id].start);
     default:
       return state;
   }
@@ -63,17 +67,6 @@ export const selectEventEntities = createSelector(
 
 export const selectAllEvents = createSelector(getEventsState, selectAll);
 export const selectEventCount = createSelector(getEventsState, selectTotal);
-
-/*export const selectCurrentEventId = createSelector(
-  getEventsState,
-  fromUser.getSelectedUserId
-);
-
-export const selectCurrentEvent = createSelector(
-  selectEventEntities,
-  selectCurrentEventId,
-  (eventEntities, eventId) => eventEntities[eventId]
-); */
 
 export const getEventsStateAll = createSelector(
   getEventsState,

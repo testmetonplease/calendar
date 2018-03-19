@@ -5,6 +5,7 @@
       <button type="button" pButton icon="fa-check" label="Yes" (click)="cd.accept()"></button>
     </p-footer>
   </p-confirmDialog>
+  <app-truck-event-dialog *ngIf="(allBars$ | async).displayEventForm" visible="true" [currentStartTime]="curStartTime" [currentEndTime]="curEndTime"></app-truck-event-dialog>
 
   <p-schedule [events]="eventList$ | async" [header]="header" [defaultDate]="getDate()" defaultView='agendaWeek' slotDuration="01:00"
     [eventLimit]="false" [weekends]="false" minTime="8:00" maxTime="20:00" height='auto' [droppable]="true" (onDayClick)="handleDayClick($event)"

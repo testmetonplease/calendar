@@ -7,11 +7,13 @@ import { ScheduleModule } from 'primeng/schedule';
 import { EventService } from '@providers/event-service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { TruckEventDialogModule } from '../truck-event-dialog/truck-event-dialog.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ScheduleModule,
+    TruckEventDialogModule,
     CalendarRoutingModule,
     ConfirmDialogModule
   ],
